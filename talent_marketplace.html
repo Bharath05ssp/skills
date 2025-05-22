@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalentHub - Connect & Hire Skilled Professionals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: white;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .welcome-section h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-section p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .skills-section {
+            margin-bottom: 25px;
+        }
+
+        .skill-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skill-input-container input {
+            flex: 1;
+        }
+
+        .skills-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+            color: #7c3aed;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-tag .remove {
+            cursor: pointer;
+            background: rgba(124, 58, 237, 0.2);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .main-dashboard {
+            display: none;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .profile-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .profile-info .email {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 18px 24px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            margin-bottom: 30px;
+            background: white;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .filters {
+            margin-bottom: 30px;
+        }
+
+        .filters h4 {
+            margin-bottom: 15px;
+            color: #374151;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-tag {
+            padding: 6px 12px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tag.active {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .user-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .user-info h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .user-info .user-email {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .hire-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hire-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .user-bio {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .user-skills {
+            margin-bottom: 20px;
+        }
+
+        .user-skills h5 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .rate-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .no-results h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #6366f1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .main-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .welcome-section {
+                padding: 40px 20px;
+            }
+            
+            .welcome-section h1 {
+                font-size: 32px;
+            }
+            
+            .auth-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .user-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">
+                🚀 TalentHub
+            </div>
+            <div class="user-nav" id="userNav" style="display: none;">
+                <span id="currentUserName"></span>
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="welcome-section">
+            <h1>Find & Hire Amazing Talent</h1>
+            <p>Connect with skilled professionals, showcase your expertise, and build your dream team. Join thousands of talented individuals ready to bring your projects to life.</p>
+            
+            <div class="auth-buttons">
+                <button class="btn btn-primary" onclick="showLoginForm()">Sign In</button>
+                <button class="btn btn-secondary" onclick="showRegisterForm()">Join TalentHub</button>
+            </div>
+
+            <!-- Login Form -->
+            <div class="form-container" id="loginForm">
+                <h2 style="text-align: center; margin-bottom: 30px;">Welcome Back</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                </form>
+                <p style="text-align: center; margin-top: 20px;">
+                    New to TalentHub? <a href="#" onclick="showRegisterForm()" style="color: #6366f1;">Create an account</a>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div class="form-container" id="registerForm">
+                <h2 style="text-align: center; margin-bottom: 30px;">Join TalentHub</h2>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="regEmail">Email Address</label>
+                        <input type="email" id="regEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profession">Profession</label>
+                        <input type="text" id="profession" placeholder="e.g., Web Developer, Designer, Writer" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">About You</label>
+                        <textarea id="bio" rows="4" placeholder="Tell potential clients about your experience and expertise..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="hourlyRate">Hourly Rate ($)</label>
+                        <input type="number" id="hourlyRate" min="1" placeholder="50" required>
+                    </div>
+                    <div class="skills-section">
+                        <label>Your Skills</label>
+                        <div class="skill-input-container">
+                            <input type="text" id="skillInput" placeholder="Add a skill (e.g., JavaScript, Design, Writing)">
+                            <button type="button" class="btn btn-secondary" onclick="addSkill()">Add</button>
+                        </div>
+                        <div class="skills-display" id="skillsDisplay"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                </form>
+                <p style="text-align: center; margin-top: 20px;">
+                    Already have an account? <a href="#" onclick="showLoginForm()" style="color: #6366f1;">Sign in</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard" class="main-dashboard">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="profile-card" id="userProfile"></div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalSkills">0</div>
+                        <div class="stat-label">Skills Listed</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="showEditProfile()" style="width: 100%; margin-bottom: 20px;">Edit Profile</button>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <h2 style="margin-bottom: 20px;">Discover Talent</h2>
+                
+                <input type="text" class="search-bar" id="searchInput" placeholder="Search by name, skills, or profession..." onkeyup="searchUsers()">
+                
+                <div class="filters">
+                    <h4>Filter by Skills</h4>
+                    <div class="filter-tags" id="skillFilters"></div>
+                </div>
+
+                <div class="user-grid" id="userGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hire Modal -->
+    <div id="hireModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Hire Professional</h3>
+                <button class="close-btn" onclick="closeModal('hireModal')">&times;</button>
+            </div>
+            <div id="hireUserInfo"></div>
+            <form onsubmit="sendHireRequest(event)">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" required placeholder="e.g., Website Design for Startup">
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Project Description</label>
+                    <textarea id="projectDescription" rows="4" required placeholder="Describe your project requirements, timeline, and expectations..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="budget">Budget ($)</label>
+                    <input type="number" id="budget" min="1" required placeholder="1000">
+                </div>
+                <div class="form-group">
+                    <label for="timeline">Timeline</label>
+                    <select id="timeline" required>
+                        <option value="">Select timeline</option>
+                        <option value="urgent">Less than 1 week</option>
+                        <option value="short">1-2 weeks</option>
+                        <option value="medium">1 month</option>
+                        <option value="long">2-3 months</option>
+                        <option value="flexible">Flexible</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Hire Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="close-btn" onclick="closeModal('editModal')">&times;</button>
+            </div>
+            <form onsubmit="updateProfile(event)">
+                <div class="form-group">
+                    <label for="editFullName">Full Name</label>
+                    <input type="text" id="editFullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editProfession">Profession</label>
+                    <input type="text" id="editProfession" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBio">About You</label>
+                    <textarea id="editBio" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editHourlyRate">Hourly Rate ($)</label>
+                    <input type="number" id="editHourlyRate" min="1" required>
+                </div>
+                <div class="skills-section">
+                    <label>Your Skills</label>
+                    <div class="skill-input-container">
+                        <input type="text" id="editSkillInput" placeholder="Add a skill">
+                        <button type="button" class="btn btn-secondary" onclick="addEditSkill()">Add</button>
+                    </div>
+                    <div class="skills-display" id="editSkillsDisplay"></div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Update Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('talentHubUsers')) || [];
+        let userSkills = [];
+        let editSkills = [];
+        let selectedUserId = null;
+        let allSkills = new Set();
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            generateSkillFilters();
+        });
+
+        // Authentication functions
+        function showLoginForm() {
+            hideAllForms();
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        function showRegisterForm() {
+            hideAllForms();
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function hideAllForms() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                showDashboard();
+            } else {
+                alert('Invalid email or password. Please try again.');
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const fullName = document.getElementById('fullName').value;
+            const profession = document.getElementById('profession').value;
+            const bio = document.getElementById('bio').value;
+            const hourlyRate = document.getElementById('hourlyRate').value;
+
+            // Check if user already exists
+            if (users.find(u => u.email === email)) {
+                alert('An account with this email already exists.');
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                id: Date.now(),
+                email,
+                password,
+                fullName,
+                profession,
+                bio,
+                hourlyRate: parseInt(hourlyRate),
+                skills: [...userSkills],
+                joinDate: new Date().toLocaleDateString(),
+                avatar: fullName.charAt(0).toUpperCase()
+            };
+
+            users.push(newUser);
+            localStorage.setItem('talentHubUsers', JSON.stringify(users));
+            
+            // Add skills to global skills set
+            userSkills.forEach(skill => allSkills.add(skill));
+            
+            currentUser = newUser;
+            userSkills = [];
+            showDashboard();
+        }
+
+        function showDashboard() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'grid';
+            document.getElementById('userNav').style.display = 'flex';
+            document.getElementById('currentUserName').textContent = currentUser.fullName;
+            
+            // Hide auth buttons since user is now logged in
+            hideAllForms();
+            
+            displayUserProfile();
+            displayAllUsers();
+            updateStats();
+            generateSkillFilters();
+        }
+
+        function logout() {
+            currentUser = null;
+            userSkills = [];
+            editSkills = [];
+            
+            // Show welcome screen and hide dashboard
+            document.getElementById('welcomeScreen').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('userNav').style.display = 'none';
+            
+            // Show auth buttons again
+            document.querySelector('.auth-buttons').style.display = 'flex';
+            hideAllForms();
+            
+            // Reset forms
+            document.querySelectorAll('form').forEach(form => form.reset());
+            document.getElementById('skillsDisplay').innerHTML = '';
+        }
+
+        // Skills management
+        function addSkill() {
+            const skillInput = document.getElementById('skillInput');
+            const skill = skillInput.value.trim();
+            
+            if (skill && !userSkills.includes(skill)) {
+                userSkills.push(skill);
+                updateSkillsDisplay();
+                skillInput.value = '';
+            }
+        }
+
+        function updateSkillsDisplay() {
+            const display = document.getElementById('skillsDisplay');
+            display.innerHTML = userSkills.map(skill => 
+                `<div class="skill-tag">
+                    ${skill}
+                    <span class="remove" onclick="removeSkill('${skill}')">×</span>
+                </div>`
+            ).join('');
+        }
+
+        function removeSkill(skill) {
+            userSkills = userSkills.filter(s => s !== skill);
+            updateSkillsDisplay();
+        }
+
+        function addEditSkill() {
+            const skillInput = document.getElementById('editSkillInput');
+            const skill = skillInput.value.trim();
+            
+            if (skill && !editSkills.includes(skill)) {
+                editSkills.push(skill);
+                updateEditSkillsDisplay();
+                skillInput.value = '';
+            }
+        }
+
+        function updateEditSkillsDisplay() {
+            const display = document.getElementById('editSkillsDisplay');
+            display.innerHTML = editSkills.map(skill => 
+                `<div class="skill-tag">
+                    ${skill}
+                    <span class="remove" onclick="removeEditSkill('${skill}')">×</span>
+                </div>`
+            ).join('');
+        }
+
+        function removeEditSkill(skill) {
+            editSkills = editSkills.filter(s => s !== skill);
+            updateEditSkillsDisplay();
+        }
+
+        // Profile management
+        function displayUserProfile() {
+            const profileDiv = document.getElementById('userProfile');
+            profileDiv.innerHTML = `
+                <div class="profile-header">
+                    <div class="avatar">${currentUser.avatar}</div>
+                    <div class="profile-info">
+                        <h3>${currentUser.fullName}</h3>
+                        <div class="email">${currentUser.email}</div>
+                    </div>
+                </div>
+                <p style="color: #6b7280; margin-bottom: 15px;"><strong>${currentUser.profession}</strong></p>
+                <p style="color: #4b5563; margin-bottom: 15px; line-height: 1.5;">${currentUser.bio || 'No bio provided'}</p>
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #374151;">Skills:</strong><br>
+                    <div style="margin-top: 8px;">
+                        ${currentUser.skills && currentUser.skills.length > 0 ? 
+                            currentUser.skills.map(skill => `<span class="skill-tag" style="
