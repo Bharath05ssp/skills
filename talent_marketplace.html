@@ -207,22 +207,3 @@
     </script>
 
         
-
-        // Profile management
-        function displayUserProfile() {
-            const profileDiv = document.getElementById('userProfile');
-            profileDiv.innerHTML = `
-                <div class="profile-header">
-                    <div class="avatar">${currentUser.avatar}</div>
-                    <div class="profile-info">
-                        <h3>${currentUser.fullName}</h3>
-                        <div class="email">${currentUser.email}</div>
-                    </div>
-                </div>
-                <p style="color: #6b7280; margin-bottom: 15px;"><strong>${currentUser.profession}</strong></p>
-                <p style="color: #4b5563; margin-bottom: 15px; line-height: 1.5;">${currentUser.bio || 'No bio provided'}</p>
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #374151;">Skills:</strong><br>
-                    <div style="margin-top: 8px;">
-                        ${currentUser.skills && currentUser.skills.length > 0 ? 
-                            currentUser.skills.map(skill => `<span class="skill-tag" style="
